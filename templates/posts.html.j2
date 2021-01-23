@@ -3,7 +3,12 @@
 {% block content %}
   {% for post in posts %}
 	<article id="post">
-	  <a href="{{ posts_dir + "/" + post.file_name }}">{{ post.title }}</a>
+	  <h3>
+		<a href="{{ posts_dir + "/" + post.file_name }}">{{ post.title }}</a>
+	  </h3>
+	  <div>
+		{{ post.publish_date.strftime('%A, %d %B, %Y') }}
+	  </div>
 	</article>
   {% endfor %}
 {% endblock %}
