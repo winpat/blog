@@ -22,6 +22,7 @@ class Config:
     build_dir: str = "out"
     static_dir: str = "static"
     posts_dir: str = "posts"
+    images_dir: str = "images"
 
 
 def load_config(config_file: str = "config.yml") -> Config:
@@ -105,12 +106,17 @@ def parse_post(post_file: str) -> Post:
 
 if __name__ == "__main__":
     site_cfg = load_config()
-    create_site_skeleton(site_cfg)
-    copy_static_files()
-
     build_dir = site_cfg.build_dir
     posts_dir = site_cfg.posts_dir
     static_dir = site_cfg.static_dir
+    images_dir = site_cfg.images_dir
+
+    create_site_skeleton(site_cfg)
+    copy_static_files()
+
+    copytree(
+        path.join(posts_dir, images_dir), path.join(build_dir, posts_dir, images_dir)
+    )
 
     post_tmpl = load_template("post.html.j2")
     posts = []
