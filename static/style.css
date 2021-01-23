@@ -29,17 +29,6 @@
 	margin-right: 5%;
 }
 
-#posts > a {
-	color:inherit;
-	text-decoration: none;
-
-}
-
-#about > a {
-	color:inherit;
-	text-decoration: none;
-}
-
 #content {
 	height: 100%;
 }
@@ -50,7 +39,7 @@
 	color: rgb(79, 79, 79);
 }
 
-#post > a {
+a {
 	color:inherit;
 	text-decoration: none;
 }
