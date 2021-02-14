@@ -4,7 +4,7 @@
   {% for post in posts %}
 	<article id="post">
 	  <h3>
-		<a href="{{ posts_dir + "/" + post.file_name }}">{{ post.title }}</a>
+		<a href="{{ POSTS_DIR / post.file_name }}">{{ post.title }}</a>
 	  </h3>
 	  <div>
 		{{ post.publish_date.strftime('%A, %d %B, %Y') }}
