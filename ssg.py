@@ -65,7 +65,7 @@ def load_template(tmpl: str, template_dir: str = "templates") -> Template:
 
 
 def md_to_html(md_text: str) -> Tuple[str, Dict]:
-    md = Markdown(extensions=["meta"])
+    md = Markdown(extensions=["meta", "fenced_code", "codehilite"])
     html = md.convert(md_text)
     return html, md.Meta
 
