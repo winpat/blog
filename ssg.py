@@ -59,16 +59,14 @@ def copy_images() -> None:
     copytree(POSTS_DIR / IMAGES_DIR, BUILD_DIR / POSTS_DIR / IMAGES_DIR)
 
 
-def load_template(tmpl: str) -> Template:
-    # TODO A closure might a good solution so we don't always need to
-    # instantiate the environment.
+def template_loader() -> Template:
     env = Environment(
         loader=FileSystemLoader(TEMPLATE_DIR),
         autoescape=select_autoescape(["html", "xml"]),
     )
     env.globals["STATIC_DIR"] = STATIC_DIR
     env.globals["POSTS_DIR"] = POSTS_DIR
-    return env.get_template(tmpl)
+    return env.get_template
 
 
 def md_to_html(md_text: str) -> Tuple[str, Dict]:
@@ -118,6 +116,7 @@ if __name__ == "__main__":
     copy_static_files()
     copy_images()
 
+    load_template = template_loader()
     post_tmpl = load_template("post.html.j2")
     posts = []
     for md_file in md_files(POSTS_DIR):
