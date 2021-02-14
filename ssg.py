@@ -1,4 +1,4 @@
-from typing import Union, NamedTuple, Iterable, Dict, List, Tuple
+from typing import Union, NamedTuple, Iterable, Dict, List, Tuple, Optional
 from pathlib import Path
 from sys import exit
 from os.path import isdir, exists
@@ -25,6 +25,8 @@ class Config:
     description: str
     twitter: str
     github: str
+    url: str
+    copyright: str
 
 
 def load_config(config_file: str = "config.yml") -> Config:
@@ -86,6 +88,7 @@ class Post:
     raw: str
     html: str
     meta: Dict
+    link: Optional[str] = None
 
     @property
     def title(self) -> str:
@@ -117,10 +120,14 @@ if __name__ == "__main__":
     copy_images()
 
     load_template = template_loader()
-    post_tmpl = load_template("post.html.j2")
+    base_url = site_cfg.url.rstrip("/")
+
+    # Render posts
     posts = []
+    post_tmpl = load_template("post.html.j2")
     for md_file in md_files(POSTS_DIR):
         post = parse_post(POSTS_DIR / md_file)
+        post.link = f"{base_url}/{POSTS_DIR}/{post.file_name}"
         render_page(
             post_tmpl,
             context={"post": post} | asdict(site_cfg),
@@ -128,8 +135,16 @@ if __name__ == "__main__":
         )
         posts.append(post)
 
+    # Render index page
     render_page(
         load_template("posts.html.j2"),
         context={"posts": posts} | asdict(site_cfg),
         out_file=path.join(BUILD_DIR, "index.html"),
+    )
+
+    # Render RSS feed
+    render_page(
+        load_template("rss.xml.j2"),
+        context={"posts": posts} | asdict(site_cfg),
+        out_file=path.join(BUILD_DIR, "rss.xml"),
     )
