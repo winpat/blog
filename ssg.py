@@ -95,6 +95,10 @@ class Post:
         return self.meta["title"][0]
 
     @property
+    def uuid(self) -> str:
+        return self.meta["uuid"][0]
+
+    @property
     def file_name(self) -> str:
         return self.title.lower().replace(" ", "-") + ".html"
 
@@ -109,6 +113,7 @@ class Post:
 def parse_post(post_file: Path) -> Post:
     content = post_file.read_text()
     html, meta = md_to_html(content)
+    assert meta["uuid"], "Post requires uuid attribute."
     return Post(content, html, meta)
 
 
