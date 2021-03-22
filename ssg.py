@@ -130,7 +130,7 @@ if __name__ == "__main__":
         post.link = f"{base_url}/{POSTS_DIR}/{post.file_name}"
         render_page(
             post_tmpl,
-            context={"post": post} | asdict(site_cfg),
+            context={"post": post, **asdict(site_cfg)},
             out_file=BUILD_DIR / POSTS_DIR / post.file_name,
         )
         posts.append(post)
@@ -138,13 +138,13 @@ if __name__ == "__main__":
     # Render index page
     render_page(
         load_template("posts.html.j2"),
-        context={"posts": posts} | asdict(site_cfg),
+        context={"posts": posts, **asdict(site_cfg)},
         out_file=path.join(BUILD_DIR, "index.html"),
     )
 
     # Render RSS feed
     render_page(
         load_template("rss.xml.j2"),
-        context={"posts": posts} | asdict(site_cfg),
+        context={"posts": posts, **asdict(site_cfg)},
         out_file=path.join(BUILD_DIR, "rss.xml"),
     )
