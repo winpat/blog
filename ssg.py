@@ -72,7 +72,7 @@ def template_loader() -> Template:
 
 
 def md_to_html(md_text: str) -> Tuple[str, Dict]:
-    md = Markdown(extensions=["meta", "fenced_code", "codehilite"])
+    md = Markdown(extensions=["meta", "fenced_code", "codehilite", "footnotes"])
     html = md.convert(md_text)
     return html, md.Meta
 
