@@ -1,12 +1,19 @@
+@font-face {
+  font-family: 'Mukta';
+  src: url('Mukta-Regular.ttf') format('truetype');
+}
+
 html, body {
 	height: 100%;
+	font-family: "Mukta";
 }
 
 #wrapper {
 	font-size: 18pt;
-	margin-left: 20%;
+	margin-left: auto;
+	margin-right: auto;
 	margin-bottom: -50px;
-	width: 60%;
+	max-width: 1000px;
 	height: 100%;
 }
 
@@ -55,4 +62,8 @@ a {
 
 h3 {
 	margin-bottom: 10px;
+}
+
+code {
+	font-size: 16pt;
 }
